@@ -17,31 +17,33 @@ use App\Http\Controllers\PackageController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware'=>['auth:sanctum']], function () {
+
+    Route::post('admin/logout', [AdminController::class , 'logout']);
+
+    Route::post('/admin/eventManager/approve/{id}', [AdminController::class , 'approveEventManager']);
+
+    Route::post('/admin/eventManager/reject/{id}',[AdminController::class , 'rejectEventManager']);
+
+    Route::get('/eventManagers', [EventManagerController::class , 'index']);
+
+    Route::delete('/delete', [EventManagerController::class , 'destroy']);
+    
+    Route::get('/search/{first_name}', [EventManagerController::class , 'search']);
+    
+    Route::post('/update/{id}', [EventManagerController::class , 'update']);
+    
+    Route::post('/addPackage', [PackageController::class , 'create']);    
+
 });
 
 Route::post('admin/login', [AdminController::class , 'login']);
 
 Route::post('eventManager/register', [EventManagerController::class , 'register']);
-Route::post('eventManager/login', [EventManagerController::class , 'login']);
 
+Route::post('eventManager/login', [EventManagerController::class , 'login']);
 
 Route::get('/admin/eventManager/pending', [AdminController::class , 'pendingEventManager']);
 
-Route::post('/admin/eventManager/approve/{id}', [AdminController::class , 'approveEventManager']);
-
-Route::post('/admin/eventManager/reject/{id}',[AdminController::class , 'rejectEventManager']);
-
-
-Route::get('/eventManagers', [EventManagerController::class , 'index']);
-
-Route::delete('/delete', [EventManagerController::class , 'destroy']);
-
-Route::get('/search/{first_name}', [EventManagerController::class , 'search']);
-
-Route::post('/update/{id}', [EventManagerController::class , 'update']);
-
-Route::post('/addPackage', [PackageController::class , 'create']);
 
 

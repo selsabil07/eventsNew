@@ -27,4 +27,5 @@ Route::get('/admin/eventManager/pending', [AdminController::class , 'pendingEven
 
 
 Route::post('/admin/eventManager/approve/{id}', 'AdminController@approveEventManager')->name('admin.approveEventManager');
+
 Route::post('/admin/eventManager/reject/{eventManager}', 'AdminController@rejectEventManager')->name('admin.rejectEventManager');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\EventManager;
@@ -43,6 +44,15 @@ class AdminController extends Controller
     }
 
 
+    public function logout(Request $request) {
+        auth()->user()->tokens()->delete();
+
+        return [
+            'message' => 'Logged out'
+        ];
+    }
+
+
     public function pendingEventManager()
 {
         $EventManagers = EventManager::where('approved',0)->get();
@@ -66,7 +76,7 @@ class AdminController extends Controller
     {
             $EventManager->approved = 0;
             $EventManager->save();
-            return "the event manager has been rejected";
+            return EventManager::destroy($id);
     }
 }
 //     public function approveEventManager(EventManager $EventManager)
