@@ -18,14 +18,3 @@ use App\Http\Controllers\EventManagerController;
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('/eventManagers', [EventManagerController::class , 'index']);
-
-
-Route::get('/admin/eventManager/pending', [AdminController::class , 'pendingEventManager']);
-
-
-
-Route::post('/admin/eventManager/approve/{id}', 'AdminController@approveEventManager')->name('admin.approveEventManager');
-
-Route::post('/admin/eventManager/reject/{eventManager}', 'AdminController@rejectEventManager')->name('admin.rejectEventManager');

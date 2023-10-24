@@ -82,11 +82,6 @@ class EventManagerController extends Controller
         ];
     }
 
-     /**
-     * Display a listing of the resource.
-     *
-     * 
-     */
     public function index(){
         return EventManager::all();
     }
@@ -103,6 +98,11 @@ class EventManagerController extends Controller
         $EventManager = EventManager::find($id);
         $EventManager->update($request->all());
         return $EventManager;
+    }
+
+    public function EventManagerCount() {
+        $count = EventManager::count();
+        return $count;
     }
 
     

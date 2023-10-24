@@ -35,6 +35,8 @@ Route::group(['middleware'=>['auth:sanctum']], function () {
     
     Route::post('/addPackage', [PackageController::class , 'create']);    
 
+    Route::get('/count', [EventManagerController::class , 'EventManagerCount']);  
+
 });
 
 Route::post('admin/login', [AdminController::class , 'login']);
