@@ -40,6 +40,23 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'api' => [
+            'driver' => 'token',
+            'provider' => 'users',
+            'hash' => false,
+        ],
+        'admin' => [
+            'driver' => 'token', // You can use 'token', 'passport', or another driver if needed
+            'provider' => 'admins', // This should match the provider for your admin model
+        ],
+        // 'eventManager' => [
+        //     'driver' => 'token',
+        //     'provider' => 'eventManagers',
+        // ],
+        'sanctum' => [
+            'driver' => 'sanctum',
+            'provider' => 'users', // Make sure this matches your user provider
+        ],
     ],
 
     /*
@@ -64,6 +81,19 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
+
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class, // Update this with your admin model
+        ],
+        // 'eventManagers' => [
+        //     'driver' => 'eloquent',
+        //     'model' => App\Models\EventManager::class, // Update this with your admin model
+        // ],
+        // 'sanctum' => [
+        //     'driver' => 'eloquent',
+        //     'model' => App\Models\Admin::class,
+        // ],
 
         // 'users' => [
         //     'driver' => 'database',

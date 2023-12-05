@@ -20,6 +20,11 @@ class EventManager extends Model
     {
         return $this->belongsTo(Admin::class);
     }
+
+    public function Event()
+    {
+        return $this->hasMany(Event::class);
+    }
     /**
      * The attributes that are mass assignable.
      *
@@ -34,7 +39,7 @@ class EventManager extends Model
         'phone',
         'password',
         'Cpassword',
-        'approved',
+        
     ];
 
     /**

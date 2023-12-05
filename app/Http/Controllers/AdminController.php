@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\EventManager;
 use App\Models\Admin;
+use App\Models\Event;
 use App\Http\Controllers\EventManagerController;
+use App\Http\Controllers\EventController;
 
 
 
@@ -22,9 +24,11 @@ class AdminController extends Controller
             'password' => 'required|string',
         ]);
 
-        // Check if the admin exists
+        //Check if the admin exists
         $admin = Admin::where('AdminName', $fields['AdminName'])->first();
 
+        // $admin = Admin::where(AdminName, $request->AdminName)->first();
+        // return dd($request->all);
         // Check if the admin exists and password is correct
         if (!$admin || !Hash::check($fields['password'], $admin->password)) {
             return response([
@@ -53,30 +57,30 @@ class AdminController extends Controller
     }
 
 
-    public function pendingEventManager()
+    public function pendingEvent()
 {
-        $EventManagers = EventManager::where('approved',0)->get();
-        return "you are pending";
+        $Events = Event::where('approved',0)->get();
+        return "your event is pending";
 
 }
-    public function approveEventManager($id) 
+    public function approveEvent($id) 
     {
-        $EventManager = EventManager::find($id);
-        if($EventManager)
+        $Event = Event::find($id);
+        if($Event)
     {
-            $EventManager->approved = 1;
-            $EventManager->save();
-            return "the event manager approved";
+            $Event->approved = 1;
+            $Event->save();
+            return "the event approved";
     }
 }
     public function rejectEventManager($id) 
     {
-        $EventManager = EventManager::find($id);
-        if($EventManager)
+        $Event = Event::find($id);
+        if($Event)
     {
-            $EventManager->approved = 0;
-            $EventManager->save();
-            return EventManager::destroy($id);
+            $Event->approved = 0;
+            $Event->save();
+            return Event::destroy($id);
     }
 }
 //     public function approveEventManager(EventManager $EventManager)

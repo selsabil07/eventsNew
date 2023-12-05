@@ -28,7 +28,6 @@ class EventManagerController extends Controller
             'birthday' => $fields['birthday'],
             'gender' => $fields['gender'],
             'email' => $fields['email'],
-            'approved' => $fields['approved'] ?? '0',
             'phone' => $fields['phone'],
             'password' => bcrypt($fields['password']),
             'Cpassword' => bcrypt($fields['Cpassword'])
@@ -41,7 +40,7 @@ class EventManagerController extends Controller
             'token' => $token
         ];
 
-        return redirect()->action('App\Http\Controllers\AdminController@pendingEventManager');
+        return response($response, 201);
     
             // $EventManager = EventManager::where('status', EventManager::STATUS_PENDING)->get();
             // return ('wait till the your rejistration be approved');
@@ -57,6 +56,7 @@ class EventManagerController extends Controller
         // Check email
         $EventManager = EventManager::where('email', $fields['email'])->first();
 
+
         // Check password
         if(!$EventManager || !Hash::check($fields['password'], $EventManager->password)) {
             return response([
@@ -64,6 +64,9 @@ class EventManagerController extends Controller
             ], 401);
         }
 
+
+           
+        
         $token = $EventManager->createToken('myapptoken')->plainTextToken;
 
         $response = [
@@ -72,8 +75,8 @@ class EventManagerController extends Controller
         ];
 
         return response($response, 201);
-    }
-
+    
+}
     public function logout(Request $request) {
         auth()->EventManager()->tokens()->delete();
 
@@ -97,13 +100,39 @@ class EventManagerController extends Controller
     public function update($id , Request $request ){
         $EventManager = EventManager::find($id);
         $EventManager->update($request->all());
-        return $EventManager;
+        return response()->json($EventManager);
     }
 
     public function EventManagerCount() {
         $count = EventManager::count();
-        return $count;
+        return response()->json($count);
     }
 
+    public function showEventManager(string $id)
+    {
+        // Check if a user is authenticated
+        // if (auth()->check()) {
+        //     // Get the currently authenticated user
+        //     $EventManager = auth()->EventManager();
     
-}
+        //     // Access user attributes
+        //     $first_name = $EventManager->first_name;
+        //     $last_name = $EventManager->last_name;
+        //     $email = $EventManager->email;
+    
+        //     // You can use this user information in your view or controller logic
+        //     // For example, pass it to a view
+        //     return response()->json($EventManager);
+
+        $eventManager = EventManager::find($id);
+            $first_name = $eventManager->first_name;
+            $last_name = $eventManager->last_name;
+            $email = $eventManager->email;
+        return response()->json($eventManager);
+
+        }
+    }
+    
+
+    
+

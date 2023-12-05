@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('password');
             $table->string('Cpassword');
-            $table->boolean('approved')->default(0);
+            // $table->boolean('approved')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
