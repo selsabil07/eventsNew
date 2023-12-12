@@ -12,6 +12,7 @@ class Admin extends Authenticatable
 {
     use HasFactory,HasApiTokens;
     protected $guard = 'admin';
+    
     public function EventManagers()
 {
     return $this->hasMany(EventManager::class);

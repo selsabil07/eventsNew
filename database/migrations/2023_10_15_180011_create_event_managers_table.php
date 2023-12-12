@@ -15,15 +15,15 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('admin_id')->default(1); // Foreign key
             $table->foreign('admin_id')->references('id')->on('admins');
+            $table->binary('photo')->nullable();
             $table->string('first_name');
             $table->string('last_name');
             $table->date('birthday');
             $table->string('gender');
             $table->string('email')->unique();
             $table->string('phone');
+            $table->string('organization'); 
             $table->string('password');
-            $table->string('Cpassword');
-            // $table->boolean('approved')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

@@ -4,8 +4,8 @@ namespace App\Models;
 
 //use Illuminate\Contracts\Auth\MustVerifyEmail;
 // use Illuminate\Database\Eloquent\Factories\HasFactory;
-// //use Illuminate\Foundation\Auth\EventManager as Authenticatable;
-// use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\EventManager as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 // use Laravel\Sanctum\HasApiTokens;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -37,8 +37,9 @@ class EventManager extends Model
         'gender',
         'email',
         'phone',
+        'organization',
         'password',
-        'Cpassword',
+        'photo'
         
     ];
 
@@ -49,7 +50,6 @@ class EventManager extends Model
      */
     protected $hidden = [
         'password',
-        'Cpassword',
         'remember_token',
     ];
 

@@ -16,7 +16,6 @@ return new class extends Migration
             $table->unsignedBigInteger('EventManager_id')->default(1); // Foreign key
             $table->foreign('EventManager_id')->references('id')->on('event_managers');
             $table->string('eventTitle');
-            $table->string('organization'); 
             $table->string('country');
             $table->string('tags');
             $table->string('sector');

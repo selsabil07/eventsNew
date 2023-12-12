@@ -9,9 +9,9 @@ class Package extends Model
 {
     use HasFactory;
 
-    public function Admin()
+    public function EventManager()
     {
-        return $this->belongsTo(Admin::class);
+        return $this->hasMany(EventManager::class);
     }
 
     protected $fillable = [

@@ -91,8 +91,7 @@ class AdminController extends Controller
 //         //redirect()->route('admin.pendingEventManagers');
 // }
 
-
-
-
-
+public function index(){
+    return Admin::all();
+}
 }

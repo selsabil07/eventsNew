@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Event;
-use App\Http\Controllers\EventController;
+use App\Models\EventManager;
+use App\Http\Controllers\EventManagerController;
 use App\Http\Controllers\AdminController;
 
 class EventController extends Controller
@@ -29,36 +30,38 @@ class EventController extends Controller
      * Show the form for creating a new resource.
      */
  
-        public function create (Request $request) {
-            $fields = $request->validate([
-                'eventTitle' => 'required|string',
-                'organization' => 'required|string',
-                'country' => 'required|string',
-                'sector' => 'required|string',
-                'photo' => '',
-                'tags' => 'required|string',
-                'summary' => 'required|string',
-                'description' => 'required|string',
-                'startingDate' => 'required|date',
-                'endingDate' => 'required|date',
-            ]);
-    
-            $Event = Event::create([
-                'eventTitle' => $fields['eventTitle'],
-                'organization' => $fields['organization'],
-                'country' => $fields['country'],
-                'sector' => $fields['sector'],
-                'photo' => $fields['photo'] ?? null,
-                'tags' => $fields['tags'] ,
-                'summary' => $fields['summary'],
-                'description' => $fields['description'],
-                'startingDate' => $fields['startingDate'],
-                'endingDate' => $fields['endingDate']
-            ]);
-            return response()->json($Event, 200);
-
-    }
-
+     public function create(Request $request)
+     {
+         $fields = $request->validate([
+             'eventTitle' => 'required|string',
+             'country' => 'required|string',
+             'sector' => 'required|string',
+             'photo' => '',
+             'tags' => 'required|string',
+             'summary' => 'required|string',
+             'description' => 'required|string',
+             'startingDate' => 'required|date',
+             'endingDate' => 'required|date',
+            //  'eventManagerId' => 'required|exists:event_managers,id', // Ensure the existence of the event manager
+         ]);
+     
+         // Create the event with the provided fields
+         $event = Event::create([
+             'eventTitle' => $fields['eventTitle'],
+             'country' => $fields['country'],
+             'sector' => $fields['sector'],
+             'photo' => $fields['photo'] ?? null,
+             'tags' => $fields['tags'],
+             'summary' => $fields['summary'],
+             'description' => $fields['description'],
+             'startingDate' => $fields['startingDate'],
+             'endingDate' => $fields['endingDate'],
+            //  'EventManager_id' => $fields['eventManagerId'], // Set the event manager ID
+         ]);
+     
+         return response()->json($event, 200);
+     }
+     
     /**
      * Store a newly created resource in storage.
      */
@@ -75,7 +78,6 @@ class EventController extends Controller
         $Event = Event::find($id);
         $EventManager = $Event->EventManager;
         $eventTitle = $Event->eventTitle;
-        $organization = $Event->organization;
         $country = $Event->country;
         $tags = $Event->tags;
         $sector = $Event->sector;
@@ -118,10 +120,14 @@ class EventController extends Controller
     }
 
     public function nonApprovedEvents(){
-        $nonApprovedEvents = Event::where('approved', 0)->get();
-
+        $nonApprovedEvents = Event::where('approved', 0)->count();
         // You can return the result or perform additional actions
         return response()->json($nonApprovedEvents);
+    }
+
+    public function showEvent(){
+        $Events = Event::where('approved', 0)->get();
+        return response()->json($Events);
     }
 }
 

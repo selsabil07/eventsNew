@@ -21,8 +21,8 @@ class Event extends Model
     
 
     protected $fillable = [
+        'EventManager_id',
         'eventTitle' ,
-        'organization' ,
         'country',
         'sector',
         'photo',

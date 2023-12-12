@@ -17,12 +17,17 @@ use App\Http\Controllers\exposantController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+// routes/api.php
+// Route::middleware('auth:api')->group(function() {
+
+// });
+
+
 Route::middleware('auth:sanctum')->group(function () {
     // Define your routes here that require 'sanctum' guard and 'admin' middleware
        Route::get('/eventManagers', [EventManagerController::class , 'index'])->middleware('admin');
-       
-
-
+    
        Route::get('/events', [EventController::class , 'index']);
 
        Route::get('/admin/event/pending', [AdminController::class , 'pendingEvent']);
@@ -37,6 +42,13 @@ Route::middleware('auth:sanctum')->group(function () {
 //     });
 
 // });
+Route::get('/ShowEventManager', [EventManagerController::class , 'showEventManager']);  
+
+Route::get('/uploadPhoto', [EventManagerController::class , 'upload']);
+
+Route::get('/showPackages', [PackageController::class , 'index']);
+
+Route::post('/createPackage', [PackageController::class , 'create']);
 
 Route::get('/EventCount', [EventController::class , 'EventCount']);
 
@@ -47,7 +59,7 @@ Route::get('/exposantShow', [exposantController::class , 'exposantShow']);
 
     Route::post('admin/logout', [AdminController::class , 'logout']);
 
-    Route::post('/admin/eventManager/approve/{id}', [AdminController::class , 'approveEventManager']);
+    Route::post('/admin/event/approve/{id}', [AdminController::class , 'approveEvent']);
 
     Route::post('/admin/eventManager/reject/{id}',[AdminController::class , 'rejectEventManager']);
 
@@ -61,7 +73,7 @@ Route::get('/exposantShow', [exposantController::class , 'exposantShow']);
 
     Route::get('/count', [EventManagerController::class , 'EventManagerCount']);  
 
-    Route::get('/ShowEventManager/{id}', [EventManagerController::class , 'ShowEventManager']);  
+    Route::get('/ShowEventManager/{id}', [EventManagerController::class , 'showEventManager']);  
 
     Route::post('/createEvent', [EventController::class , 'create']);
 
@@ -73,6 +85,8 @@ Route::get('/exposantShow', [exposantController::class , 'exposantShow']);
 
     Route::delete('/delete/{id}', [EventController::class , 'destroy']);
 
+    Route::get('/admin', [AdminController::class , 'index']);
+
 
     Route::get('/allEvents', [EventController::class , 'index']);
 
@@ -80,6 +94,8 @@ Route::get('/exposantShow', [exposantController::class , 'exposantShow']);
 
     Route::get('/nonApprovedEvents', [EventController::class , 'nonApprovedEvents']);
     
+    Route::get('/nonApprovedEvents/show', [EventController::class , 'showEvent']);
+
     Route::post('/updateEvent/{id}', [EventController::class , 'update']);
 
     Route::post('/ShowEvent', [EventController::class , 'show']);
